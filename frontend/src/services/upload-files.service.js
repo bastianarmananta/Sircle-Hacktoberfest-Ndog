@@ -6,16 +6,12 @@ class UploadFilesService {
 
     formData.append("file", file);
 
-    return http.post("/upload", formData, {
+    return http.post("/predict", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
       onUploadProgress,
     });
-  }
-
-  getFiles() {
-    return http.get("/files");
   }
 }
 
