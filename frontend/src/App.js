@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 
-const baseURL = "https://jsonplaceholder.typicode.com/posts";
+const baseURL = "http://localhost:8000/predict";
 
 export default function App() {
   const [post, setPost] = React.useState(null);

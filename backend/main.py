@@ -14,6 +14,6 @@ async def predict(file: UploadFile = File(...)):
     extension = file.filename.split(".")[-1] in ("jpg", "jpeg", "png")
     if not extension:
         return {"error": "File extension not allowed"}
-    image = await(read_file(file))
-    result = predict_image(await file)
+    image = read_file( await file.read())
+    result = predict_image(image)
     return {"result": result}
