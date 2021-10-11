@@ -11,66 +11,81 @@ export default class UploadFiles extends Component {
       currentFile: undefined,
       progress: 0,
       message: "",
-  
+
       fileInfos: [],
     };
-    
 
   }
 
   upload() {
     let currentFile = this.state.selectedFiles[0];
 
-    this.setState({
-      progress: 0,
-      currentFile: currentFile,
+    this.setState((state, props) => {
+      return {
+        progress: 0,
+        currentFile: currentFile
+      }
     });
 
     UploadService.upload(currentFile, (event) => {
-      this.setState({
+      this.setState((state, props) => {
+        return {
         progress: Math.round((100 * event.loaded) / event.total),
-      });
+        }
+      })
     })
       .then((response) => {
-        this.setState({
+        this.setState((state, props) => {
+          return {
           message: response.data.message,
-        });
+        }
+      })
         return UploadService.getFiles();
       })
       .then((files) => {
-        this.setState({
+        this.setState((state, props) => {
+          return {
           fileInfos: files.data,
-        });
+        }
+      })
       })
       .catch(() => {
-        this.setState({
+        this.setState((state, props) => {
+          return {
           progress: 0,
-          message: "Could not upload the file!",
+          message : "Could not upload the file!",
           currentFile: undefined,
-        });
-      });
+          }
+        })
+      })
 
-    this.setState({
+    this.setState((state, props) => {
+      return {
       selectedFiles: undefined,
-    });
+    }
+  });
   }
 
   selectFile(event) {
-    this.setState({
-      selectedFiles: event.target.files,
+    this.setState((state, props) => {
+      return {
+        selectedFiles: event.target.files,
+      }
     });
   }
 
   componentDidMount() {
     UploadService.getFiles().then((response) => {
-      this.setState({
+      this.setState((state, props) => {
+        return { 
         fileInfos: response.data,
+        }
       });
-    });
+    })
   }
 
   render() {
-const {
+    const {
       selectedFiles,
       currentFile,
       progress,
@@ -124,5 +139,5 @@ const {
       </div>
     );
   }
-  
+
 }
